@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutterando_decoupling/app/app_widget.dart';
 import 'package:flutterando_decoupling/app/modules/home/home_module.dart';
 import 'package:flutterando_decoupling/app/share/repositories/localstorage/local_storage_hive.dart';
+import 'package:flutterando_decoupling/app/share/repositories/localstorage/local_storage_interface.dart';
 import 'package:flutterando_decoupling/app/share/repositories/localstorage/local_storage_shared.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
-        Bind((i) => LocalStorageHive()),
-        // Bind((i) => LocalStorageShared()),
+        // Bind<ILocalStorage>((i) => LocalStorageHive()),
+        Bind<ILocalStorage>((i) => LocalStorageShared()),
       ];
 
   @override

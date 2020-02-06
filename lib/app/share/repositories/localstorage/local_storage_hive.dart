@@ -1,16 +1,18 @@
 import 'dart:async';
-
 import 'package:flutterando_decoupling/app/share/repositories/localstorage/local_storage_interface.dart';
 import 'package:hive/hive.dart';
-import "package:path_provider/path_provider.dart";
+import "package:hive_flutter/hive_flutter.dart";
+// import "package:path_provider/path_provider.dart";
 
 class LocalStorageHive implements ILocalStorage{
 
   Completer<Box> _instance = Completer<Box>();
 
   _init() async {
-    var dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
+    // if(! kIsWeb) {
+    //   var dir = await getApplicationDocumentsDirectory();
+    //   Hive.init(dir.path);
+    // }
     var box = await Hive.openBox('db');
     _instance.complete(box);
   }
@@ -29,13 +31,15 @@ class LocalStorageHive implements ILocalStorage{
   @override
   Future<List<String>> get(String key) async {
     var box = await _instance.future;
-    return box.get(key);
+    Future<List<String>> result = box.get(key);
+    return result;
   }
 
   @override
   Future put(String key, List<String> value) async {
     var box = await _instance.future;
-    box.put(key, value);
+    var result = box.put(key, value);
+    return result;
   }
 
 }

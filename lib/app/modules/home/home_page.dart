@@ -18,7 +18,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
-          onChanged: controller.setText,
+          controller: controller.textController,
         ),
         actions: <Widget>[
           Observer(builder: (_) {
